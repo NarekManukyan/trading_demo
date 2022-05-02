@@ -4,24 +4,23 @@ import 'package:flutter/services.dart';
 
 import 'app_colors.dart';
 import 'app_fonts.dart';
-import 'app_styles.dart';
 
-final base = ThemeData.dark();
-const scaffoldBackgroundColor = AppColors.charcoal;
+final base = ThemeData.light();
 
-final darkTheme = base.copyWith(
+final lightTheme = base.copyWith(
   shadowColor: AppColors.yellow,
   colorScheme: base.colorScheme.copyWith(
-    primary: AppColors.charcoal,
+    primary: AppColors.white,
     onPrimary: AppColors.white,
+    brightness: Brightness.dark,
   ),
   tabBarTheme: TabBarTheme(
     unselectedLabelStyle: base.primaryTextTheme.button!.copyWith(
       color: AppColors.white,
     ),
     labelStyle: const TextStyle(
-      color: AppColors.charcoal,
-      fontFamily: FontFamily.CeraPro,
+      color: AppColors.white,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.normal,
       fontSize: 16,
       height: 1,
@@ -31,7 +30,7 @@ final darkTheme = base.copyWith(
       color: AppColors.white,
     ),
     indicatorSize: TabBarIndicatorSize.tab,
-    labelColor: AppColors.charcoal,
+    labelColor: AppColors.white,
     unselectedLabelColor: AppColors.white,
     labelPadding: const EdgeInsets.symmetric(
       horizontal: 10,
@@ -40,51 +39,51 @@ final darkTheme = base.copyWith(
   ),
   primaryColor: AppColors.yellow,
   // shadowColor: Colors.grey[300],
-  scaffoldBackgroundColor: AppColors.charcoal,
-  dividerColor: AppColors.extraLightGray,
+  scaffoldBackgroundColor: AppColors.globalBackground,
+  dividerColor: AppColors.white,
   dividerTheme: base.dividerTheme.copyWith(
     space: 1,
-    indent: 24,
-    endIndent: 24,
-    color: AppColors.lightGray,
+    indent: 0,
+    endIndent: 0,
+    color: AppColors.dopGray.withOpacity(.5),
   ),
-  primaryIconTheme: base.primaryIconTheme.copyWith(color: AppColors.charcoal),
-  iconTheme: base.iconTheme.copyWith(color: AppColors.charcoal),
+  primaryIconTheme: base.primaryIconTheme.copyWith(color: AppColors.white),
+  iconTheme: base.iconTheme.copyWith(color: AppColors.white),
   appBarTheme: base.appBarTheme.copyWith(
-    color: AppColors.charcoal,
+    color: AppColors.appBarBackgroundColor,
     centerTitle: true,
     elevation: 0,
     iconTheme: const IconThemeData(
       color: AppColors.white,
     ),
     titleTextStyle: base.primaryTextTheme.headline6!.copyWith(
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       color: AppColors.white,
       fontWeight: FontWeight.bold,
       fontSize: 20,
       letterSpacing: -.4,
       height: 1.1,
     ),
-    systemOverlayStyle: SystemUiOverlayStyle.dark,
+    systemOverlayStyle: SystemUiOverlayStyle.light,
     toolbarTextStyle: base.textTheme
         .copyWith(
           bodyText1: base.textTheme.bodyText1!.copyWith(
-            fontFamily: FontFamily.CeraPro,
+            fontFamily: FontFamily.inter,
             color: AppColors.white,
             fontWeight: FontWeight.bold,
           ),
           headline6: base.textTheme.headline6!.copyWith(
-            fontFamily: FontFamily.CeraPro,
-            color: AppColors.chalkboardBlack,
+            fontFamily: FontFamily.inter,
+            color: AppColors.white,
             fontWeight: FontWeight.bold,
           ),
           headline3: base.textTheme.headline3!.copyWith(
-            fontFamily: FontFamily.CeraPro,
+            fontFamily: FontFamily.inter,
             color: AppColors.white,
             fontWeight: FontWeight.bold,
           ),
           headline4: base.textTheme.headline4!.copyWith(
-            fontFamily: FontFamily.CeraPro,
+            fontFamily: FontFamily.inter,
             color: AppColors.white,
             fontWeight: FontWeight.w500,
           ),
@@ -92,7 +91,7 @@ final darkTheme = base.copyWith(
         .bodyText2,
   ),
   bottomNavigationBarTheme: base.bottomNavigationBarTheme.copyWith(
-    backgroundColor: AppColors.charcoal,
+    backgroundColor: AppColors.white,
     elevation: 0,
   ),
   chipTheme: base.chipTheme.copyWith(
@@ -101,19 +100,19 @@ final darkTheme = base.copyWith(
     labelStyle: const TextStyle(
       color: AppColors.white,
       fontWeight: FontWeight.w500,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
     ),
-    selectedColor: AppColors.charcoal,
+    selectedColor: AppColors.white,
     secondaryLabelStyle: const TextStyle(
-      color: AppColors.charcoal,
+      color: AppColors.white,
       fontWeight: FontWeight.w500,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
     ),
     secondarySelectedColor: Colors.transparent,
   ),
   sliderTheme: base.sliderTheme.copyWith(
     activeTrackColor: AppColors.red,
-    inactiveTrackColor: AppColors.extraLightGray,
+    inactiveTrackColor: AppColors.white,
     overlayColor: Colors.transparent,
     thumbColor: AppColors.red,
     thumbShape: SliderComponentShape.noOverlay,
@@ -123,26 +122,24 @@ final darkTheme = base.copyWith(
     cursorColor: AppColors.yellow,
     selectionHandleColor: AppColors.yellow,
   ),
-
   cupertinoOverrideTheme: const CupertinoThemeData(
     primaryColor: AppColors.yellow,
   ),
-
   brightness: Brightness.dark,
   inputDecorationTheme: base.inputDecorationTheme.copyWith(
     errorStyle: const TextStyle(
       color: AppColors.red,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
     ),
     hintStyle: base.primaryTextTheme.bodyText1!.copyWith(
-      color: AppColors.grayMedium,
-      fontFamily: FontFamily.CeraPro,
+      color: AppColors.white,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.normal,
       fontSize: 16,
       letterSpacing: -.32,
       height: 1.25,
     ),
-    fillColor: AppColors.darkTextFillColor,
+    fillColor: AppColors.white,
     contentPadding: const EdgeInsets.symmetric(horizontal: 16),
     border: const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -167,8 +164,8 @@ final darkTheme = base.copyWith(
     ),
     filled: true,
     labelStyle: const TextStyle(
-      color: AppColors.darkGray,
-      fontFamily: FontFamily.CeraPro,
+      color: AppColors.white,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.normal,
       fontSize: 16,
       letterSpacing: -.32,
@@ -177,7 +174,7 @@ final darkTheme = base.copyWith(
   ),
   buttonTheme: base.buttonTheme.copyWith(
     textTheme: ButtonTextTheme.primary,
-    buttonColor: AppColors.charcoal,
+    buttonColor: AppColors.white,
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
@@ -191,15 +188,15 @@ final darkTheme = base.copyWith(
         (states) {
           return states.contains(MaterialState.disabled)
               ? TextStyle(
-                  color: AppColors.white.withOpacity(0.4),
-                  fontFamily: FontFamily.CeraPro,
+                  color: AppColors.white.withOpacity(0.5),
+                  fontFamily: FontFamily.inter,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   height: 1.1,
                 )
               : const TextStyle(
                   color: AppColors.white,
-                  fontFamily: FontFamily.CeraPro,
+                  fontFamily: FontFamily.inter,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   height: 1.1,
@@ -213,102 +210,93 @@ final darkTheme = base.copyWith(
       }),
       foregroundColor: MaterialStateProperty.resolveWith((states) {
         return states.contains(MaterialState.disabled)
-            ? AppColors.burgundy.withOpacity(0.4)
-            : AppColors.burgundy;
+            ? AppColors.white.withOpacity(0.4)
+            : AppColors.white;
       }),
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
           return states.contains(MaterialState.disabled)
-              ? AppColors.grayMedium.withOpacity(0.4)
-              : AppColors.grayMedium;
+              ? AppColors.white.withOpacity(0.4)
+              : AppColors.white;
         },
       ),
       overlayColor: MaterialStateProperty.all(
-        AppColors.grayMedium.withOpacity(.5),
+        AppColors.white.withOpacity(.5),
       ),
     ),
   ),
   tooltipTheme: TooltipThemeData(
     preferBelow: false,
     decoration: BoxDecoration(
-      color: AppColors.burgundy,
+      color: AppColors.white,
       borderRadius: BorderRadius.circular(8),
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      shadowColor: MaterialStateProperty.all(AppColors.yellow),
+      shadowColor: MaterialStateProperty.all(Colors.transparent),
       padding: MaterialStateProperty.all(
         const EdgeInsets.symmetric(
           horizontal: 24,
-          vertical: 16,
+          vertical: 12,
         ),
       ),
+      overlayColor: MaterialStateProperty.all(AppColors.white.withOpacity(.5)),
+      minimumSize: MaterialStateProperty.all(Size.zero),
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       elevation: MaterialStateProperty.all(0),
       textStyle: MaterialStateProperty.resolveWith(
         (states) {
           return const TextStyle(
             color: AppColors.white,
-            fontFamily: FontFamily.CeraPro,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            height: 1.1,
+            fontFamily: FontFamily.inter,
+            fontWeight: FontWeight.w600,
+            fontSize: 17,
+            height: 1.41,
           );
         },
       ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
       foregroundColor: MaterialStateProperty.all(AppColors.white),
-      backgroundColor: MaterialStateProperty.resolveWith(
-        (states) {
-          return states.contains(MaterialState.disabled)
-              ? AppColors.yellow.withOpacity(0.5)
-              : AppColors.yellow;
-        },
-      ),
-      overlayColor: MaterialStateProperty.all(
-        AppColors.grayMedium.withOpacity(.5),
-      ),
     ),
   ),
-  outlinedButtonTheme: OutlinedButtonThemeData(style: outlineButtonStyle),
   toggleableActiveColor: AppColors.red,
   textTheme: base.primaryTextTheme.copyWith(
     headline1: base.primaryTextTheme.headline1!.copyWith(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.bold,
-      fontSize: 26,
+      fontSize: 22,
+      height: 1.45,
     ),
     headline2: base.primaryTextTheme.headline2!.copyWith(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.bold,
-      fontSize: 38,
-      letterSpacing: -.76,
-      height: 1,
+      fontSize: 16,
+      height: 1.5,
     ),
     headline3: base.primaryTextTheme.headline3!.copyWith(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
-      fontWeight: FontWeight.bold,
-      fontSize: 28,
-      letterSpacing: -.56,
+      fontFamily: FontFamily.inter,
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
       height: 1,
     ),
     headline4: base.primaryTextTheme.headline4!.copyWith(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.normal,
       fontSize: 26,
       letterSpacing: -.52,
       height: 1,
     ),
     headline5: base.primaryTextTheme.headline5!.copyWith(
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       color: AppColors.white,
       fontWeight: FontWeight.bold,
       fontSize: 24,
@@ -316,16 +304,15 @@ final darkTheme = base.copyWith(
       height: 1.2,
     ),
     headline6: base.primaryTextTheme.headline6!.copyWith(
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       color: AppColors.white,
       fontWeight: FontWeight.bold,
-      fontSize: 20,
-      letterSpacing: -.4,
-      height: 1.1,
+      fontSize: 22,
+      height: 1.45,
     ),
     subtitle1: base.primaryTextTheme.subtitle1!.copyWith(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.bold,
       fontSize: 16,
       height: 1.25,
@@ -333,39 +320,36 @@ final darkTheme = base.copyWith(
     ),
     subtitle2: base.primaryTextTheme.subtitle2!.copyWith(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.w500,
       fontSize: 16,
-      height: 1.25,
+      height: 1.5,
       letterSpacing: -.32,
     ),
     bodyText1: base.primaryTextTheme.bodyText1!.copyWith(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
-      fontWeight: FontWeight.normal,
-      fontSize: 16,
-      letterSpacing: -.32,
-      height: 1.25,
+      fontFamily: FontFamily.inter,
+      fontWeight: FontWeight.w600,
+      fontSize: 17,
+      height: 1.41,
     ),
     bodyText2: base.primaryTextTheme.bodyText2!.copyWith(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.normal,
       fontSize: 14,
-      letterSpacing: -.16,
-      height: 1.25,
+      height: 1.14,
     ),
     caption: const TextStyle(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.normal,
       fontSize: 12,
-      height: 1.1,
-      letterSpacing: -.16,
+      height: 1.33,
     ),
     overline: const TextStyle(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.normal,
       fontSize: 10,
       height: 1.1,
@@ -373,7 +357,7 @@ final darkTheme = base.copyWith(
     ),
     button: const TextStyle(
       color: AppColors.white,
-      fontFamily: FontFamily.CeraPro,
+      fontFamily: FontFamily.inter,
       fontWeight: FontWeight.bold,
       fontSize: 20,
       height: 1.1,

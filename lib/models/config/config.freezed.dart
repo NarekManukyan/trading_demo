@@ -12,32 +12,11 @@ part of 'config.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Config _$ConfigFromJson(Map<String, dynamic> json) {
   return _Config.fromJson(json);
 }
-
-/// @nodoc
-class _$ConfigTearOff {
-  const _$ConfigTearOff();
-
-  _Config call(
-      {required Flavor env, required bool production, required String apiUrl}) {
-    return _Config(
-      env: env,
-      production: production,
-      apiUrl: apiUrl,
-    );
-  }
-
-  Config fromJson(Map<String, Object?> json) {
-    return Config.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Config = _$ConfigTearOff();
 
 /// @nodoc
 mixin _$Config {
@@ -160,6 +139,7 @@ class _$_Config implements _Config {
             const DeepCollectionEquality().equals(other.apiUrl, apiUrl));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -180,18 +160,18 @@ class _$_Config implements _Config {
 
 abstract class _Config implements Config {
   factory _Config(
-      {required Flavor env,
-      required bool production,
-      required String apiUrl}) = _$_Config;
+      {required final Flavor env,
+      required final bool production,
+      required final String apiUrl}) = _$_Config;
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$_Config.fromJson;
 
   @override
-  Flavor get env;
+  Flavor get env => throw _privateConstructorUsedError;
   @override
-  bool get production;
+  bool get production => throw _privateConstructorUsedError;
   @override
-  String get apiUrl;
+  String get apiUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ConfigCopyWith<_Config> get copyWith => throw _privateConstructorUsedError;

@@ -5,7 +5,6 @@ import '../../mixins/after_layout_mixin.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/auth/auth_state.dart';
-import '../../utils/storage_utils.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);
@@ -40,11 +39,6 @@ class _SplashScreenPageState extends State<SplashScreenPage>
   }
 
   Future<void> checkSession() async {
-    final _token = await StorageUtils.getAccessToken();
-    if (_token != null) {
-      await router.popAndPush(const LoginRoute());
-    } else {
-      await router.popAndPush(const DashboardRoute());
-    }
+    await router.popAndPush(const DashboardRoute());
   }
 }

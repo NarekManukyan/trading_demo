@@ -1,3 +1,4 @@
 class FontFamily {
-  static const CeraPro = 'CeraPro';
+  FontFamily._();
+  static const inter = 'Inter';
 }

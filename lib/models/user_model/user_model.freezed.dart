@@ -12,40 +12,11 @@ part of 'user_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 UserModel _$UserModelFromJson(Map<String, dynamic> json) {
   return _UserModel.fromJson(json);
 }
-
-/// @nodoc
-class _$UserModelTearOff {
-  const _$UserModelTearOff();
-
-  _UserModel call(
-      {String? email,
-      String? id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      String? firstName,
-      String? lastName}) {
-    return _UserModel(
-      email: email,
-      id: id,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      firstName: firstName,
-      lastName: lastName,
-    );
-  }
-
-  UserModel fromJson(Map<String, Object?> json) {
-    return UserModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $UserModel = _$UserModelTearOff();
 
 /// @nodoc
 mixin _$UserModel {
@@ -229,6 +200,7 @@ class _$_UserModel extends _UserModel {
             const DeepCollectionEquality().equals(other.lastName, lastName));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -252,29 +224,29 @@ class _$_UserModel extends _UserModel {
 
 abstract class _UserModel extends UserModel {
   factory _UserModel(
-      {String? email,
-      String? id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      String? firstName,
-      String? lastName}) = _$_UserModel;
+      {final String? email,
+      final String? id,
+      final DateTime? createdAt,
+      final DateTime? updatedAt,
+      final String? firstName,
+      final String? lastName}) = _$_UserModel;
   _UserModel._() : super._();
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
 
   @override
-  String? get email;
+  String? get email => throw _privateConstructorUsedError;
   @override
-  String? get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  DateTime? get createdAt;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
-  DateTime? get updatedAt;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
   @override
-  String? get firstName;
+  String? get firstName => throw _privateConstructorUsedError;
   @override
-  String? get lastName;
+  String? get lastName => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserModelCopyWith<_UserModel> get copyWith =>

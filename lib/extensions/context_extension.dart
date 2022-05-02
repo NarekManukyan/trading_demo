@@ -1,7 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../themes/app_colors.dart';
-import '../utils/color_utils.dart';
+import '../themes/app_fonts.dart';
 
 extension BuildContextExtensions on BuildContext {
   ThemeData get theme => Theme.of(this);
@@ -68,7 +70,12 @@ extension ThemeDataHelper on ThemeData {
 
   TextStyle get bodyText2 => textTheme.bodyText2!;
 
-  TextStyle get bodyText3 => textTheme.bodyText2!.bold;
+  TextStyle get bodyText3 => textTheme.bodyText2!.copyWith(
+        fontSize: 12,
+        height: 1.33,
+        fontWeight: FontWeight.w500,
+        fontFeatures: <FontFeature>[const FontFeature.slashedZero()],
+      );
 
   TextStyle get body17 => textTheme.bodyText2!.size(17);
 
@@ -83,58 +90,136 @@ extension ThemeDataHelper on ThemeData {
   ButtonStyle get textButtonStyle => textButtonTheme.style!;
 }
 
-extension ElevatedButtonHelper on ButtonStyle {
-  ButtonStyle buttonColor(Color color) => copyWith(
-        shadowColor: MaterialStateProperty.all(color),
+extension ElevatedButtonHelper on ThemeData {
+  ButtonStyle get grayButtonStyle => elevatedButtonTheme.style!.copyWith(
         foregroundColor: MaterialStateProperty.all(AppColors.white),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 24,
+          ),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32),
+          ),
+        ),
         backgroundColor: MaterialStateProperty.resolveWith(
           (states) {
             return states.contains(MaterialState.disabled)
-                ? color.withOpacity(0.5)
-                : color;
+                ? AppColors.grayButtonBackgroundColor.withOpacity(0.5)
+                : AppColors.grayButtonBackgroundColor;
           },
         ),
       );
 
-  ButtonStyle elevationSize(double elevation) {
-    return copyWith(
-      elevation: MaterialStateProperty.all(
-        elevation,
-      ),
-    );
-  }
-
-  ButtonStyle paddingAll(double padding) {
-    return copyWith(
-      padding: MaterialStateProperty.all(
-        EdgeInsets.all(padding),
-      ),
-    );
-  }
-
-  ButtonStyle paddingVertical(double padding) {
-    return copyWith(
-      padding: MaterialStateProperty.all(
-        EdgeInsets.symmetric(vertical: padding),
-      ),
-    );
-  }
-
-  ButtonStyle get removePaddings => copyWith(
+  ButtonStyle get blueButtonStyle => elevatedButtonTheme.style!.copyWith(
+        foregroundColor: MaterialStateProperty.all(AppColors.white),
         padding: MaterialStateProperty.all(
-          EdgeInsets.zero,
+          const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 24,
+          ),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32),
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            return states.contains(MaterialState.disabled)
+                ? AppColors.blue.withOpacity(0.5)
+                : AppColors.blue;
+          },
         ),
       );
 
-  ButtonStyle textColor(
-    Color color,
-  ) {
-    return copyWith(
-      foregroundColor: MaterialStateProperty.all(
-        color,
-      ),
-    );
-  }
+  ButtonStyle get smallButtonSelectedStyle =>
+      elevatedButtonTheme.style!.copyWith(
+        foregroundColor: MaterialStateProperty.all(AppColors.white),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(
+            vertical: 8,
+            horizontal: 10,
+          ),
+        ),
+        textStyle: MaterialStateProperty.all(
+          const TextStyle(
+            fontSize: 12,
+            height: 1.33,
+            fontWeight: FontWeight.w500,
+            fontFeatures: <FontFeature>[FontFeature.slashedZero()],
+          ),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            return states.contains(MaterialState.disabled)
+                ? AppColors.tub.withOpacity(0.5)
+                : AppColors.tub;
+          },
+        ),
+      );
+
+  ButtonStyle get smallButtonUnselectedStyle =>
+      elevatedButtonTheme.style!.copyWith(
+        foregroundColor: MaterialStateProperty.all(AppColors.white),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(
+            vertical: 8,
+            horizontal: 10,
+          ),
+        ),
+        textStyle: MaterialStateProperty.all(
+          const TextStyle(
+            fontSize: 12,
+            height: 1.33,
+            fontWeight: FontWeight.w500,
+            fontFamily: FontFamily.inter,
+            fontFeatures: <FontFeature>[FontFeature.slashedZero()],
+          ),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.all(
+          Colors.transparent,
+        ),
+      );
+
+  ButtonStyle get bigButtonStyle => elevatedButtonTheme.style!.copyWith(
+        foregroundColor: MaterialStateProperty.all(AppColors.white),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 16,
+          ),
+        ),
+        textStyle: MaterialStateProperty.all(
+          const TextStyle(
+            color: AppColors.white,
+            fontFamily: FontFamily.inter,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            height: 1.5,
+          ),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32),
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.all(
+          Colors.transparent,
+        ),
+      );
 }
 
 // usage example: context.h3.regular.white
@@ -143,35 +228,9 @@ extension TextStyleHelpers on TextStyle {
 
   TextStyle get yellow => copyWith(color: AppColors.yellow);
 
-  TextStyle get darkGray => copyWith(color: AppColors.darkGray);
-
-  TextStyle get mediumGray => copyWith(color: AppColors.grayMedium);
-
-  TextStyle get charcoal => copyWith(color: AppColors.charcoal);
-
   TextStyle get red => copyWith(color: AppColors.red);
 
-  TextStyle get chalkboardBlack => copyWith(color: AppColors.chalkboardBlack);
-
-  TextStyle get burgundy => copyWith(color: AppColors.burgundy);
-
-  TextStyle get lightGray => copyWith(color: AppColors.lightGray);
-
   TextStyle get error => copyWith(color: AppColors.error);
-
-  TextStyle dynamic({
-    Color lightColor = AppColors.grayMedium,
-    Color darkColor = AppColors.darkGray,
-    bool invertColor = false,
-  }) {
-    return copyWith(
-      color: brightnessColor(
-        lightColor: lightColor,
-        darkColor: darkColor,
-        invert: invertColor,
-      ),
-    );
-  }
 
   TextStyle size([double? fontSize]) => copyWith(fontSize: fontSize);
 

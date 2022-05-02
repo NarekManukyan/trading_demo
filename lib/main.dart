@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flavorbanner/flavor_config.dart';
+import 'package:flavorbanner/flavorbanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,10 +16,15 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
     DeviceOrientation.portraitDown,
   ]);
 
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // status bar color
+    ),
+  );
+
   await EasyLocalization.ensureInitialized();
 
   registerGetIt(env);
-
   FlavorConfig(
     flavor: env,
     color: Colors.grey,

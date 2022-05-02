@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../extensions/context_extension.dart';
-import '../providers/screen_service.dart';
-import '../themes/app_colors.dart';
-
 enum ContrastPreference {
   none,
   light,
@@ -36,18 +32,6 @@ Color blackOrWhiteContrastColor(
     }
   }
   return value > 0.6 ? const Color(0xFF000000) : const Color(0xFFFFFFFF);
-}
-
-Color brightnessColor({
-  Color lightColor = AppColors.white,
-  Color darkColor = AppColors.darkGray,
-  bool invert = false,
-}) {
-  var isDarkMode = router.navigatorKey.currentContext!.isDarkMode;
-  if (invert) {
-    isDarkMode = !isDarkMode;
-  }
-  return isDarkMode ? lightColor : darkColor;
 }
 
 Color darken(Color color, [double amount = .1]) {

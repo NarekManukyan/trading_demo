@@ -1,4 +1,4 @@
-import 'package:flavorbanner/flavor_config.dart';
+import 'package:flavorbanner/flavorbanner.dart';
 
 import 'main.dart' as app;
 
