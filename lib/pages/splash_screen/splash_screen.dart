@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 
 import '../../mixins/after_layout_mixin.dart';
 import '../../providers/screen_service.dart';
-import '../../router.dart';
 import '../../store/auth/auth_state.dart';
 
 class SplashScreenPage extends StatefulWidget {

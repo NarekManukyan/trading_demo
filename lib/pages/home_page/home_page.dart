@@ -1,19 +1,26 @@
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../constants/filter_subtypes.dart';
+import '../../constants/filter_types.dart';
+import '../../constants/sort_types.dart';
 import '../../extensions/extensions.dart';
+import '../../store/home_state/home_state.dart';
 import '../../themes/app_colors.dart';
 import '../../utils/assets.dart';
 import '../../utils/dimens.dart';
+import '../../utils/durations_utils.dart';
 import '../../widgets/action_button.dart';
 import '../../widgets/bot_item_widget.dart';
+import '../../widgets/graph_widget.dart';
 import '../../widgets/indicator_dots.dart';
 import '../../widgets/total_tile_widget.dart';
+import 'widgets/bar_chart_widget.dart';
+import 'widgets/circular_chart_widget.dart';
 import 'widgets/dca_modal.dart';
 import 'widgets/filter_modal.dart';
-import 'widgets/graph_widget.dart';
 import 'widgets/grid_modal.dart';
 
 class HomePage extends HookWidget {
@@ -22,20 +29,35 @@ class HomePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _pageViewController = usePageController();
-    final selectedPeriodIndex = useState(0);
-    final _selectedFilterIndex = useState(0);
-    final _faker = useMemoized(Faker.new);
+    final _homeState = useMemoized(HomeState.new);
     final _onOpenFilter = useCallback(
       () async {
         await showCupertinoModalBottomSheet(
           context: context,
           barrierColor: AppColors.blockBackground.withOpacity(.9),
           builder: (_) {
-            return const FilterModal();
+            return FilterModal(
+              selectedSortType: _homeState.selectedSortType,
+              selectedSortTypeDirection: _homeState.selectedSortTypeDirection,
+              onSelectSortType: (val) {
+                if (_homeState.selectedSortType == val) {
+                  _homeState.selectedSortTypeDirection =
+                      _homeState.selectedSortTypeDirection ==
+                              SortTypeDirection.UP
+                          ? SortTypeDirection.DOWN
+                          : SortTypeDirection.UP;
+                } else {
+                  _homeState
+                    ..selectedSortType = val
+                    ..selectedSortTypeDirection = SortTypeDirection.UP;
+                }
+                _homeState.sortByBotProfit();
+              },
+            );
           },
         );
       },
-      [_faker],
+      [_homeState],
     );
     final _onOpenGrid = useCallback(
       () async {
@@ -43,11 +65,16 @@ class HomePage extends HookWidget {
           context: context,
           barrierColor: AppColors.blockBackground.withOpacity(.9),
           builder: (_) {
-            return const GridModal();
+            return GridModal(
+              selectedFilter: _homeState.selectedSubFilter,
+              onSelectSubFilter: (val) {
+                _homeState.selectedSubFilter = val;
+              },
+            );
           },
         );
       },
-      [_faker],
+      [_homeState],
     );
     final _onOpenDca = useCallback(
       () async {
@@ -55,12 +82,42 @@ class HomePage extends HookWidget {
           context: context,
           barrierColor: AppColors.blockBackground.withOpacity(.9),
           builder: (_) {
-            return const DcaModal();
+            return DcaModal(
+              selectedFilter: _homeState.selectedSubFilter,
+              onSelectSubFilter: (val) {
+                _homeState.selectedSubFilter = val;
+              },
+            );
           },
         );
       },
-      [_faker],
+      [_homeState],
     );
+
+    final _onFilterItemTap = useCallback(
+      (filter) {
+        if (_homeState.selectedFilter == filter) {
+          if (filter == FilterTypes.DCA) {
+            _onOpenDca();
+          } else if (filter == FilterTypes.GRID) {
+            _onOpenGrid();
+          }
+        } else {
+          _homeState.selectedSubFilter = FilterSubtypes.ALL;
+        }
+        _homeState.selectedFilter = filter;
+      },
+      [_homeState],
+    );
+    useEffect(() {
+      _pageViewController.addListener(
+        () {
+          _homeState.page = _pageViewController.page ?? 0;
+        },
+      );
+      return;
+    });
+
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -73,7 +130,7 @@ class HomePage extends HookWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Automations',
+                  'Bots',
                   style: context.theme.headline1,
                 ),
                 ActionButton(
@@ -94,33 +151,28 @@ class HomePage extends HookWidget {
                   child: PageView(
                     controller: _pageViewController,
                     children: [
-                      GraphWidget(
-                        selectedPeriodIndex: selectedPeriodIndex.value,
-                        onChangePeriod: (val) {
-                          selectedPeriodIndex.value = val;
+                      const LineChartWidget(),
+                      Observer(
+                        builder: (_) {
+                          return CircularChartWidget(
+                            data: _homeState.circleChartData,
+                          );
                         },
                       ),
-                      GraphWidget(
-                        selectedPeriodIndex: selectedPeriodIndex.value,
-                        onChangePeriod: (val) {
-                          selectedPeriodIndex.value = val;
-                        },
-                      ),
-                      GraphWidget(
-                        selectedPeriodIndex: selectedPeriodIndex.value,
-                        onChangePeriod: (val) {
-                          selectedPeriodIndex.value = val;
-                        },
-                      ),
+                      const BarChartWidget(),
                     ],
                   ),
                 ),
                 SizedBox(
                   height: 24,
                   child: Center(
-                    child: PageViewIndicator(
-                      selectedIndex: 0,
-                      length: 4,
+                    child: Observer(
+                      builder: (_) {
+                        return PageViewIndicator(
+                          selectedIndex: _homeState.page,
+                          length: 3,
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -135,13 +187,27 @@ class HomePage extends HookWidget {
           sliver: SliverToBoxAdapter(
             child: SizedBox(
               height: 68,
-              child: ListView.builder(
+              child: ListView(
                 padding: horizontalPadding,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) {
-                  return const TotalTile().paddingOnly(right: 8);
-                },
-                itemCount: 10,
+                children: const [
+                  TotalTile(
+                    title: '฿ 0.04876',
+                    percent: 1.11,
+                    subtitle: 'Total P&L',
+                  ),
+                  SizedBox(width: 8),
+                  TotalTile(
+                    title: '฿ 0.00376',
+                    percent: 0.07,
+                    subtitle: 'Total bot profit',
+                  ),
+                  SizedBox(width: 8),
+                  TotalTile(
+                    title: '฿0.12676',
+                    subtitle: 'Total value',
+                  ),
+                ],
               ),
             ),
           ),
@@ -153,133 +219,73 @@ class HomePage extends HookWidget {
             right: horizontalPaddingValue,
           ),
           sliver: SliverToBoxAdapter(
-            child: Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _selectedFilterIndex.value = 0;
-                  },
-                  style: context.theme.bigButtonStyle.copyWith(
-                    backgroundColor: MaterialStateProperty.all(
-                      _selectedFilterIndex.value == 0
-                          ? AppColors.blue
-                          : Colors.transparent,
-                    ),
-                    foregroundColor: MaterialStateProperty.all(
-                      _selectedFilterIndex.value == 0
-                          ? AppColors.white
-                          : AppColors.dopGray,
-                    ),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        side: BorderSide(
-                          color: _selectedFilterIndex.value == 0
-                              ? Colors.transparent
-                              : AppColors.dopGray,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  for (final filter in FilterTypes.values)
+                    Row(
+                      children: [
+                        Observer(
+                          builder: (_) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                _onFilterItemTap(filter);
+                              },
+                              style: context.theme.bigButtonStyle.copyWith(
+                                backgroundColor: MaterialStateProperty.all(
+                                  _homeState.selectedFilter == filter
+                                      ? AppColors.blue
+                                      : Colors.transparent,
+                                ),
+                                foregroundColor: MaterialStateProperty.all(
+                                  _homeState.selectedFilter == filter
+                                      ? AppColors.white
+                                      : AppColors.dopGray,
+                                ),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(32),
+                                    side: BorderSide(
+                                      color: _homeState.selectedFilter == filter
+                                          ? Colors.transparent
+                                          : AppColors.dopGray,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    _filterTitleBuilder(
+                                      filter: filter,
+                                      selectedFilter: _homeState.selectedFilter,
+                                      selectedSubFilter:
+                                          _homeState.selectedSubFilter,
+                                    ),
+                                  ),
+                                  if (filter != FilterTypes.ALL)
+                                    Row(
+                                      children: [
+                                        const SizedBox(width: 4),
+                                        Assets.iconsAngleDown.pngColored(
+                                          color: _homeState.selectedFilter ==
+                                                  filter
+                                              ? AppColors.white
+                                              : AppColors.dopGray,
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
                         ),
-                      ),
+                        const SizedBox(width: 8),
+                      ],
                     ),
-                  ),
-                  child: const Text('All'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_selectedFilterIndex.value != 1) {
-                      _selectedFilterIndex.value = 1;
-                    } else {
-                      _onOpenGrid.call();
-                    }
-                  },
-                  style: context.theme.bigButtonStyle.copyWith(
-                    backgroundColor: MaterialStateProperty.all(
-                      _selectedFilterIndex.value == 1
-                          ? AppColors.blue
-                          : Colors.transparent,
-                    ),
-                    foregroundColor: MaterialStateProperty.all(
-                      _selectedFilterIndex.value == 1
-                          ? AppColors.white
-                          : AppColors.dopGray,
-                    ),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        side: BorderSide(
-                          color: _selectedFilterIndex.value == 1
-                              ? Colors.transparent
-                              : AppColors.dopGray,
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text('Grid'),
-                      const SizedBox(width: 4),
-                      SizedBox(
-                        height: 16,
-                        width: 16,
-                        child: Assets.iconsAngleDown.pngColored(
-                          color: _selectedFilterIndex.value == 1
-                              ? AppColors.white
-                              : AppColors.dopGray,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_selectedFilterIndex.value == 2) {
-                      _onOpenDca.call();
-                    } else {
-                      _selectedFilterIndex.value = 2;
-                    }
-                  },
-                  style: context.theme.bigButtonStyle.copyWith(
-                    backgroundColor: MaterialStateProperty.all(
-                      _selectedFilterIndex.value == 2
-                          ? AppColors.blue
-                          : Colors.transparent,
-                    ),
-                    foregroundColor: MaterialStateProperty.all(
-                      _selectedFilterIndex.value == 2
-                          ? AppColors.white
-                          : AppColors.dopGray,
-                    ),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        side: BorderSide(
-                          color: _selectedFilterIndex.value == 2
-                              ? Colors.transparent
-                              : AppColors.dopGray,
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text('DCA'),
-                      const SizedBox(width: 4),
-                      SizedBox(
-                        height: 16,
-                        width: 16,
-                        child: Assets.iconsAngleDown.pngColored(
-                          color: _selectedFilterIndex.value == 2
-                              ? AppColors.white
-                              : AppColors.dopGray,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -294,7 +300,7 @@ class HomePage extends HookWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: _onOpenFilter.call,
+                  onTap: _onOpenFilter,
                   child: SizedBox(
                     width: 24,
                     height: 24,
@@ -302,24 +308,37 @@ class HomePage extends HookWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _homeState.isBotProfitSelected =
+                        !_homeState.isBotProfitSelected;
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Value change',
-                        style: context.theme.bodyText3.copyWith(
-                          color: AppColors.dopGray,
-                        ),
+                      Observer(
+                        builder: (_) {
+                          return AnimatedSwitcher(
+                            duration: animationDuration,
+                            child: SizedBox(
+                              width: 90,
+                              key: UniqueKey(),
+                              child: Text(
+                                _homeState.isBotProfitSelected
+                                    ? 'Bot profit'
+                                    : 'Value change',
+                                style: context.theme.bodyText2.copyWith(
+                                  color: AppColors.dopGray,
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                       SizedBox(
                         height: 24,
                         width: 24,
-                        child: Assets.iconsAngleDown
-                            .pngColored(
-                              color: AppColors.dopGray,
-                            )
-                            .paddingAll(4),
+                        child: Assets.iconsSortList.png,
                       ),
                     ],
                   ),
@@ -332,16 +351,51 @@ class HomePage extends HookWidget {
           padding: EdgeInsets.only(
             bottom: context.bottomPadding + 64,
           ),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (_, index) {
-                return const BotItemWidget();
-              },
-              childCount: 10,
-            ),
+          sliver: Observer(
+            builder: (_) {
+              final list = _homeState.selectedFilter == FilterTypes.ALL
+                  ? _homeState.botItems
+                  : _homeState.selectedFilter == FilterTypes.GRID
+                      ? _homeState.gridBots
+                      : _homeState.dcaBots;
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, index) {
+                    return Observer(
+                      builder: (_) {
+                        return BotItemWidget(
+                          bot: list[index],
+                          isBotProfitSelected: _homeState.isBotProfitSelected,
+                        );
+                      },
+                    );
+                  },
+                  childCount: list.length,
+                ),
+              );
+            },
           ),
         ),
       ],
     );
+  }
+
+  String _filterTitleBuilder({
+    required FilterTypes filter,
+    required FilterTypes selectedFilter,
+    required FilterSubtypes selectedSubFilter,
+  }) {
+    switch (filter) {
+      case FilterTypes.ALL:
+        return 'All';
+      case FilterTypes.GRID:
+      case FilterTypes.DCA:
+        if (selectedFilter != filter ||
+            selectedSubFilter == FilterSubtypes.ALL) {
+          return filter.title;
+        } else {
+          return '${filter.title} - ${selectedSubFilter.title}';
+        }
+    }
   }
 }

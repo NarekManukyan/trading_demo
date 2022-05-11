@@ -3,6 +3,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../router.gr.dart';
 
+export '../router.gr.dart';
+
 final router = Router();
 
 extension NavigationHelper on Router {

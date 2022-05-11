@@ -68,21 +68,21 @@ class _$ConfigCopyWithImpl<$Res> implements $ConfigCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ConfigCopyWith<$Res> implements $ConfigCopyWith<$Res> {
-  factory _$ConfigCopyWith(_Config value, $Res Function(_Config) then) =
-      __$ConfigCopyWithImpl<$Res>;
+abstract class _$$_ConfigCopyWith<$Res> implements $ConfigCopyWith<$Res> {
+  factory _$$_ConfigCopyWith(_$_Config value, $Res Function(_$_Config) then) =
+      __$$_ConfigCopyWithImpl<$Res>;
   @override
   $Res call({Flavor env, bool production, String apiUrl});
 }
 
 /// @nodoc
-class __$ConfigCopyWithImpl<$Res> extends _$ConfigCopyWithImpl<$Res>
-    implements _$ConfigCopyWith<$Res> {
-  __$ConfigCopyWithImpl(_Config _value, $Res Function(_Config) _then)
-      : super(_value, (v) => _then(v as _Config));
+class __$$_ConfigCopyWithImpl<$Res> extends _$ConfigCopyWithImpl<$Res>
+    implements _$$_ConfigCopyWith<$Res> {
+  __$$_ConfigCopyWithImpl(_$_Config _value, $Res Function(_$_Config) _then)
+      : super(_value, (v) => _then(v as _$_Config));
 
   @override
-  _Config get _value => super._value as _Config;
+  _$_Config get _value => super._value as _$_Config;
 
   @override
   $Res call({
@@ -90,7 +90,7 @@ class __$ConfigCopyWithImpl<$Res> extends _$ConfigCopyWithImpl<$Res>
     Object? production = freezed,
     Object? apiUrl = freezed,
   }) {
-    return _then(_Config(
+    return _then(_$_Config(
       env: env == freezed
           ? _value.env
           : env // ignore: cast_nullable_to_non_nullable
@@ -132,7 +132,7 @@ class _$_Config implements _Config {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Config &&
+            other is _$_Config &&
             const DeepCollectionEquality().equals(other.env, env) &&
             const DeepCollectionEquality()
                 .equals(other.production, production) &&
@@ -149,8 +149,8 @@ class _$_Config implements _Config {
 
   @JsonKey(ignore: true)
   @override
-  _$ConfigCopyWith<_Config> get copyWith =>
-      __$ConfigCopyWithImpl<_Config>(this, _$identity);
+  _$$_ConfigCopyWith<_$_Config> get copyWith =>
+      __$$_ConfigCopyWithImpl<_$_Config>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -174,5 +174,6 @@ abstract class _Config implements Config {
   String get apiUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ConfigCopyWith<_Config> get copyWith => throw _privateConstructorUsedError;
+  _$$_ConfigCopyWith<_$_Config> get copyWith =>
+      throw _privateConstructorUsedError;
 }

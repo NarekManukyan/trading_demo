@@ -31,7 +31,6 @@
 .pub/
 .fvm/
 android/
-ios/
 /build/
 
 # Web related

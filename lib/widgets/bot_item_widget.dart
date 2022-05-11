@@ -3,12 +3,21 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../extensions/extensions.dart';
 import '../../utils/assets.dart';
+import '../constants/bot_types.dart';
+import '../models/bot_model/bot_model.dart';
+import '../providers/screen_service.dart';
 import '../themes/app_colors.dart';
+import '../utils/durations_utils.dart';
 
 class BotItemWidget extends HookWidget {
   const BotItemWidget({
     Key? key,
+    required this.bot,
+    required this.isBotProfitSelected,
   }) : super(key: key);
+
+  final BotModel bot;
+  final bool isBotProfitSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +34,9 @@ class BotItemWidget extends HookWidget {
             borderRadius: BorderRadius.circular(12),
             clipBehavior: Clip.antiAlias,
             child: InkWell(
-              onTap: () {},
-              splashColor: AppColors.blue.withOpacity(.1),
-              hoverColor: AppColors.blue.withOpacity(.1),
-              focusColor: AppColors.blue.withOpacity(.1),
-              highlightColor: AppColors.blue.withOpacity(.1),
+              onTap: () {
+                router.push(BotRoute(bot: bot));
+              },
               child: Container(
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -38,7 +45,7 @@ class BotItemWidget extends HookWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Assets.iconsFlatBot.png,
+                        bot.botType.icon,
                         const SizedBox(width: 12),
                         Column(
                           mainAxisSize: MainAxisSize.min,
@@ -52,7 +59,7 @@ class BotItemWidget extends HookWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'BTC',
+                                      bot.from,
                                       style: context.theme.bodyText1,
                                     ),
                                     const SizedBox(width: 3),
@@ -64,7 +71,7 @@ class BotItemWidget extends HookWidget {
                                     ),
                                     const SizedBox(width: 3),
                                     Text(
-                                      'ETH',
+                                      bot.to,
                                       style: context.theme.bodyText1.copyWith(
                                         color: AppColors.dopGray,
                                       ),
@@ -85,7 +92,7 @@ class BotItemWidget extends HookWidget {
                                 const SizedBox(width: 4),
                                 Text(
                                   '1h 15min',
-                                  style: context.theme.bodyText3.copyWith(
+                                  style: context.theme.bodyText2.copyWith(
                                     color: AppColors.dopGray,
                                   ),
                                 ),
@@ -100,18 +107,58 @@ class BotItemWidget extends HookWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          '123.5%',
-                          style: context.theme.bodyText1.copyWith(
-                            color: AppColors.green,
-                          ),
+                        AnimatedSwitcher(
+                          duration: animationDuration,
+                          child: isBotProfitSelected
+                              ? SizedBox(
+                                  width: 96,
+                                  key: UniqueKey(),
+                                  child: Text(
+                                    '€${bot.money.toStringAsFixed(1)}',
+                                    textAlign: TextAlign.right,
+                                    style: context.theme.bodyText1.copyWith(
+                                      color: AppColors.green,
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(
+                                  width: 96,
+                                  key: UniqueKey(),
+                                  child: Text(
+                                    '${bot.percent.toStringAsFixed(1)}%',
+                                    textAlign: TextAlign.right,
+                                    style: context.theme.bodyText1.copyWith(
+                                      color: AppColors.green,
+                                    ),
+                                  ),
+                                ),
                         ),
                         const SizedBox(height: 8),
-                        Text(
-                          '€15.25',
-                          style: context.theme.bodyText3.copyWith(
-                            color: AppColors.dopGray,
-                          ),
+                        AnimatedSwitcher(
+                          duration: animationDuration,
+                          child: isBotProfitSelected
+                              ? SizedBox(
+                                  width: 96,
+                                  key: UniqueKey(),
+                                  child: Text(
+                                    '${bot.percent.toStringAsFixed(2)}%',
+                                    style: context.theme.bodyText2.copyWith(
+                                      color: AppColors.dopGray,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                )
+                              : SizedBox(
+                                  width: 96,
+                                  key: UniqueKey(),
+                                  child: Text(
+                                    '€${bot.money.toStringAsFixed(2)}',
+                                    style: context.theme.bodyText2.copyWith(
+                                      color: AppColors.dopGray,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ),
                         ),
                       ],
                     ),

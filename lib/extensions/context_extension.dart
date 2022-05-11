@@ -70,13 +70,6 @@ extension ThemeDataHelper on ThemeData {
 
   TextStyle get bodyText2 => textTheme.bodyText2!;
 
-  TextStyle get bodyText3 => textTheme.bodyText2!.copyWith(
-        fontSize: 12,
-        height: 1.33,
-        fontWeight: FontWeight.w500,
-        fontFeatures: <FontFeature>[const FontFeature.slashedZero()],
-      );
-
   TextStyle get body17 => textTheme.bodyText2!.size(17);
 
   TextStyle get caption1 => textTheme.caption!;
@@ -135,8 +128,7 @@ extension ElevatedButtonHelper on ThemeData {
         ),
       );
 
-  ButtonStyle get smallButtonSelectedStyle =>
-      elevatedButtonTheme.style!.copyWith(
+  ButtonStyle get smallButtonStyle => elevatedButtonTheme.style!.copyWith(
         foregroundColor: MaterialStateProperty.all(AppColors.white),
         padding: MaterialStateProperty.all(
           const EdgeInsets.symmetric(
@@ -166,13 +158,12 @@ extension ElevatedButtonHelper on ThemeData {
         ),
       );
 
-  ButtonStyle get smallButtonUnselectedStyle =>
-      elevatedButtonTheme.style!.copyWith(
+  ButtonStyle get smallButtonSecondStyle => elevatedButtonTheme.style!.copyWith(
         foregroundColor: MaterialStateProperty.all(AppColors.white),
         padding: MaterialStateProperty.all(
           const EdgeInsets.symmetric(
-            vertical: 8,
-            horizontal: 10,
+            vertical: 6,
+            horizontal: 12,
           ),
         ),
         textStyle: MaterialStateProperty.all(
@@ -180,17 +171,20 @@ extension ElevatedButtonHelper on ThemeData {
             fontSize: 12,
             height: 1.33,
             fontWeight: FontWeight.w500,
-            fontFamily: FontFamily.inter,
             fontFeatures: <FontFeature>[FontFeature.slashedZero()],
           ),
         ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(32),
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(
-          Colors.transparent,
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            return states.contains(MaterialState.disabled)
+                ? AppColors.tub.withOpacity(0.5)
+                : AppColors.tub;
+          },
         ),
       );
 
@@ -204,11 +198,10 @@ extension ElevatedButtonHelper on ThemeData {
         ),
         textStyle: MaterialStateProperty.all(
           const TextStyle(
-            color: AppColors.white,
             fontFamily: FontFamily.inter,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             fontSize: 16,
-            height: 1.5,
+            height: 1,
           ),
         ),
         shape: MaterialStateProperty.all(
@@ -229,6 +222,12 @@ extension TextStyleHelpers on TextStyle {
   TextStyle get yellow => copyWith(color: AppColors.yellow);
 
   TextStyle get red => copyWith(color: AppColors.red);
+
+  TextStyle get dopGray => copyWith(color: AppColors.dopGray);
+
+  TextStyle get green => copyWith(color: AppColors.green);
+
+  TextStyle get blue => copyWith(color: AppColors.blue);
 
   TextStyle get error => copyWith(color: AppColors.error);
 

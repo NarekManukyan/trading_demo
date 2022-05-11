@@ -17,7 +17,8 @@ mixin _$AuthState on _AuthState, Store {
               name: '_AuthState.currentUser'))
           .value;
 
-  final _$_currentUserAtom = Atom(name: '_AuthState._currentUser');
+  late final _$_currentUserAtom =
+      Atom(name: '_AuthState._currentUser', context: context);
 
   @override
   UserModel? get _currentUser {
@@ -32,7 +33,8 @@ mixin _$AuthState on _AuthState, Store {
     });
   }
 
-  final _$accessTokenAtom = Atom(name: '_AuthState.accessToken');
+  late final _$accessTokenAtom =
+      Atom(name: '_AuthState.accessToken', context: context);
 
   @override
   String? get accessToken {
@@ -47,15 +49,16 @@ mixin _$AuthState on _AuthState, Store {
     });
   }
 
-  final _$getCurrentUserAsyncAction = AsyncAction('_AuthState.getCurrentUser');
+  late final _$getCurrentUserAsyncAction =
+      AsyncAction('_AuthState.getCurrentUser', context: context);
 
   @override
   Future<void> getCurrentUser() {
     return _$getCurrentUserAsyncAction.run(() => super.getCurrentUser());
   }
 
-  final _$registerPushNotificationAsyncAction =
-      AsyncAction('_AuthState.registerPushNotification');
+  late final _$registerPushNotificationAsyncAction =
+      AsyncAction('_AuthState.registerPushNotification', context: context);
 
   @override
   Future<void> registerPushNotification(String token) {
@@ -63,7 +66,8 @@ mixin _$AuthState on _AuthState, Store {
         .run(() => super.registerPushNotification(token));
   }
 
-  final _$logoutAsyncAction = AsyncAction('_AuthState.logout');
+  late final _$logoutAsyncAction =
+      AsyncAction('_AuthState.logout', context: context);
 
   @override
   Future<void> logout() {

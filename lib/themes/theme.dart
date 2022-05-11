@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +11,18 @@ final base = ThemeData.light();
 
 final lightTheme = base.copyWith(
   shadowColor: AppColors.yellow,
+  splashColor: AppColors.blue.withOpacity(.1),
+  hoverColor: AppColors.blue.withOpacity(.1),
+  focusColor: AppColors.blue.withOpacity(.1),
+  highlightColor: AppColors.blue.withOpacity(.1),
+  cardTheme: base.cardTheme.copyWith(
+    color: AppColors.blockBackground,
+    elevation: 0,
+    margin: EdgeInsets.zero,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
   colorScheme: base.colorScheme.copyWith(
     primary: AppColors.white,
     onPrimary: AppColors.white,
@@ -45,7 +59,7 @@ final lightTheme = base.copyWith(
     space: 1,
     indent: 0,
     endIndent: 0,
-    color: AppColors.dopGray.withOpacity(.5),
+    color: AppColors.dopGray.withOpacity(.1),
   ),
   primaryIconTheme: base.primaryIconTheme.copyWith(color: AppColors.white),
   iconTheme: base.iconTheme.copyWith(color: AppColors.white),
@@ -241,7 +255,7 @@ final lightTheme = base.copyWith(
           vertical: 12,
         ),
       ),
-      overlayColor: MaterialStateProperty.all(AppColors.white.withOpacity(.5)),
+      overlayColor: MaterialStateProperty.all(AppColors.blue.withOpacity(.1)),
       minimumSize: MaterialStateProperty.all(Size.zero),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       elevation: MaterialStateProperty.all(0),
@@ -336,9 +350,10 @@ final lightTheme = base.copyWith(
     bodyText2: base.primaryTextTheme.bodyText2!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.inter,
-      fontWeight: FontWeight.normal,
-      fontSize: 14,
-      height: 1.14,
+      fontWeight: FontWeight.w500,
+      fontFeatures: [const FontFeature.slashedZero()],
+      fontSize: 12,
+      height: 1.33,
     ),
     caption: const TextStyle(
       color: AppColors.white,

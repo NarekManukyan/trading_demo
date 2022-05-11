@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants/filter_subtypes.dart';
 import '../../../extensions/extensions.dart';
 import '../../../providers/screen_service.dart';
 import '../../../themes/app_colors.dart';
@@ -10,7 +11,11 @@ import '../../../widgets/loading_button.dart';
 class GridModal extends StatelessWidget {
   const GridModal({
     Key? key,
+    required this.selectedFilter,
+    required this.onSelectSubFilter,
   }) : super(key: key);
+  final FilterSubtypes selectedFilter;
+  final Function(FilterSubtypes val) onSelectSubFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class GridModal extends StatelessWidget {
               ActionButton(
                 onTap: router.pop,
                 radius: 24,
-                backgroundColor: AppColors.dopGray,
+                backgroundColor: AppColors.dopGray.withOpacity(.3),
                 icon: const Icon(
                   CupertinoIcons.clear,
                   size: 12,
@@ -38,38 +43,29 @@ class GridModal extends StatelessWidget {
               )
             ],
           ).paddingAll(16),
+          const Divider(),
           Column(
             children: [
-              ListTile(
-                onTap: () {},
-                title: Center(
-                  child: Text(
-                    'All (6)',
-                    style: context.theme.bodyText1,
-                  ),
+              for (final subFilter in FilterSubtypes.values)
+                Column(
+                  children: [
+                    ListTile(
+                      onTap: () {
+                        onSelectSubFilter(subFilter);
+                        router.pop();
+                      },
+                      title: Center(
+                        child: Text(
+                          '${subFilter.title} (6)',
+                          style: selectedFilter == subFilter
+                              ? context.theme.bodyText1.blue
+                              : context.theme.bodyText1.dopGray,
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                  ],
                 ),
-              ),
-              const Divider(),
-              ListTile(
-                onTap: () {},
-                title: Center(
-                  child: Text(
-                    'Spot (4)',
-                    style: context.theme.bodyText1,
-                  ),
-                ),
-              ),
-              const Divider(),
-              ListTile(
-                onTap: () {},
-                title: Center(
-                  child: Text(
-                    'Futures (2)',
-                    style: context.theme.bodyText1,
-                  ),
-                ),
-              ),
-              const Divider(),
             ],
           ),
           const SizedBox(height: 24),
@@ -77,7 +73,7 @@ class GridModal extends StatelessWidget {
             onPressed: router.pop,
             style: context.theme.grayButtonStyle,
             child: const Text('Cancel'),
-          ),
+          ).expandedHorizontally().paddingHorizontal(),
           SizedBox(
             height: context.bottomPadding + 24,
           ),

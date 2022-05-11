@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -44,7 +42,7 @@ class AppBarWidget extends HookWidget {
                 ),
                 child: Text(
                   'Demo',
-                  style: context.theme.bodyText3.copyWith(
+                  style: context.theme.bodyText2.copyWith(
                     color: AppColors.yellow,
                   ),
                 ),
@@ -78,7 +76,7 @@ class AppBarWidget extends HookWidget {
                         ),
                         child: Text(
                           '10',
-                          style: context.theme.bodyText3,
+                          style: context.theme.bodyText2,
                         ).paddingSymmetric(
                           horizontal: 4,
                           vertical: 2,

@@ -18,7 +18,7 @@ class PageViewIndicator extends HookWidget {
   }) : super(key: key);
 
   Color getColor(int index) {
-    if (index == selectedIndex.ceil()) {
+    if (index == selectedIndex.round()) {
       return AppColors.blue;
     }
     return const Color(0xFF343850);
