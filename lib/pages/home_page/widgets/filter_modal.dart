@@ -40,10 +40,7 @@ class FilterModal extends StatelessWidget {
                 onTap: router.pop,
                 radius: 24,
                 backgroundColor: AppColors.dopGray.withOpacity(.3),
-                icon: const Icon(
-                  CupertinoIcons.clear,
-                  size: 12,
-                ),
+                icon: Assets.iconsClose.png,
               )
             ],
           ).paddingAll(16),
@@ -87,6 +84,7 @@ class FilterModal extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const Divider(),
                   ],
                 ),
             ],

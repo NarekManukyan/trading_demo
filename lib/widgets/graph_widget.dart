@@ -71,7 +71,7 @@ class LineChartWidget extends HookWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 16,
+          height: 24,
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding:
@@ -82,32 +82,35 @@ class LineChartWidget extends HookWidget {
                   _lineChartState.summaryGraphDisabled =
                       !_lineChartState.summaryGraphDisabled;
                 },
-                child: Row(
-                  children: [
-                    Observer(
-                      builder: (_) {
-                        return Container(
-                          width: 16,
-                          height: 16,
-                          decoration: BoxDecoration(
-                            color: _lineChartState.summaryGraphDisabled
-                                ? Colors.transparent
-                                : AppColors.green,
-                            borderRadius: BorderRadius.circular(4),
-                            border: Border.all(color: AppColors.green),
-                          ),
-                          child: _lineChartState.summaryGraphDisabled
-                              ? const SizedBox()
-                              : Assets.iconsCheck.png,
-                        );
-                      },
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Summary funds value',
-                      style: context.theme.bodyText2,
-                    ),
-                  ],
+                child: Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      Observer(
+                        builder: (_) {
+                          return Container(
+                            width: 16,
+                            height: 16,
+                            decoration: BoxDecoration(
+                              color: _lineChartState.summaryGraphDisabled
+                                  ? Colors.transparent
+                                  : AppColors.green,
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: AppColors.green),
+                            ),
+                            child: _lineChartState.summaryGraphDisabled
+                                ? const SizedBox()
+                                : Assets.iconsCheck.png,
+                          );
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Summary funds value',
+                        style: context.theme.bodyText2,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 24),
@@ -116,40 +119,43 @@ class LineChartWidget extends HookWidget {
                   _lineChartState.btcGraphDisabled =
                       !_lineChartState.btcGraphDisabled;
                 },
-                child: Row(
-                  children: [
-                    Observer(
-                      builder: (_) {
-                        return Container(
-                          width: 16,
-                          height: 16,
-                          decoration: BoxDecoration(
-                            color: _lineChartState.btcGraphDisabled
-                                ? Colors.transparent
-                                : AppColors.yellow,
-                            borderRadius: BorderRadius.circular(4),
-                            border: Border.all(color: AppColors.yellow),
-                          ),
-                          child: _lineChartState.btcGraphDisabled
-                              ? const SizedBox()
-                              : Assets.iconsCheck.pngColored(
-                                  color: AppColors.globalBackground,
-                                ),
-                        );
-                      },
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'BTC',
-                      style: context.theme.bodyText2,
-                    ),
-                  ],
+                child: Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      Observer(
+                        builder: (_) {
+                          return Container(
+                            width: 16,
+                            height: 16,
+                            decoration: BoxDecoration(
+                              color: _lineChartState.btcGraphDisabled
+                                  ? Colors.transparent
+                                  : AppColors.yellow,
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: AppColors.yellow),
+                            ),
+                            child: _lineChartState.btcGraphDisabled
+                                ? const SizedBox()
+                                : Assets.iconsCheck.pngColored(
+                                    color: AppColors.globalBackground,
+                                  ),
+                          );
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'BTC',
+                        style: context.theme.bodyText2,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
         Observer(
           builder: (_) {
             return Row(
@@ -468,6 +474,33 @@ class LineChartWidget extends HookWidget {
                         ),
                       );
                     },
+                  ),
+                  IgnorePointer(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const SizedBox(height: 0),
+                        DashedLine(
+                          color: AppColors.dopGray.withOpacity(.3),
+                        ),
+                        DashedLine(
+                          color: AppColors.dopGray.withOpacity(.3),
+                        ),
+                        DashedLine(
+                          color: AppColors.dopGray.withOpacity(.3),
+                        ),
+                        DashedLine(
+                          color: AppColors.dopGray.withOpacity(.3),
+                        ),
+                        DashedLine(
+                          color: AppColors.dopGray.withOpacity(.3),
+                        ),
+                        DashedLine(
+                          color: AppColors.dopGray.withOpacity(.3),
+                        ),
+                        const SizedBox(height: 0),
+                      ],
+                    ),
                   ),
                 ],
               );

@@ -43,10 +43,7 @@ class BotPage extends HookWidget {
                   onTap: router.pop,
                   radius: 24,
                   backgroundColor: AppColors.dopGray.withOpacity(.3),
-                  icon: const Icon(
-                    CupertinoIcons.clear,
-                    size: 12,
-                  ),
+                  icon: Assets.iconsClose.png,
                 ),
               ],
             ),
@@ -167,7 +164,6 @@ class BotPage extends HookWidget {
                       percent: -15,
                       subtitle: 'Max drawdown',
                     ),
-                    SizedBox(width: 8),
                   ],
                 ),
               ),
@@ -230,7 +226,7 @@ class BotPage extends HookWidget {
                               style: context.theme.headline2,
                             ),
                             const SizedBox(width: 8),
-                            Assets.iconsWarning.png,
+                            Assets.iconsInfo.png,
                           ],
                         ),
                         Text(
@@ -320,7 +316,7 @@ class BotPage extends HookWidget {
                               style: context.theme.headline2,
                             ),
                             const SizedBox(width: 8),
-                            Assets.iconsWarning.png,
+                            Assets.iconsInfo.png,
                           ],
                         ),
                         Text(
@@ -333,7 +329,7 @@ class BotPage extends HookWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Assets.iconsWarning.png,
+                        Assets.iconsInfo.png,
                         const SizedBox(width: 8),
                         Text(
                           'Balance',
@@ -363,7 +359,7 @@ class BotPage extends HookWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Assets.iconsWarning.png,
+                        Assets.iconsInfo.png,
                         const SizedBox(width: 8),
                         Text(
                           'Value',
@@ -393,7 +389,7 @@ class BotPage extends HookWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Assets.iconsWarning.png,
+                        Assets.iconsInfo.png,
                         const SizedBox(width: 8),
                         Text(
                           'P&L value',
@@ -444,7 +440,7 @@ class BotPage extends HookWidget {
                               style: context.theme.headline2,
                             ),
                             const SizedBox(width: 8),
-                            Assets.iconsWarning.png,
+                            Assets.iconsInfo.png,
                           ],
                         ),
                         Text(
@@ -457,7 +453,7 @@ class BotPage extends HookWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Assets.iconsWarning.png,
+                        Assets.iconsInfo.png,
                         const SizedBox(width: 8),
                         Text(
                           'Balance',
@@ -487,7 +483,7 @@ class BotPage extends HookWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Assets.iconsWarning.png,
+                        Assets.iconsInfo.png,
                         const SizedBox(width: 8),
                         Text(
                           'Value',
@@ -517,7 +513,7 @@ class BotPage extends HookWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Assets.iconsWarning.png,
+                        Assets.iconsInfo.png,
                         const SizedBox(width: 8),
                         Text(
                           'P&L value',

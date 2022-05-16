@@ -29,8 +29,9 @@ class Assets {
   static const String iconsTrailing = 'assets/icons/trailing.png';
   static const String iconsTrendBot = 'assets/icons/trend_bot.png';
   static const String iconsUser = 'assets/icons/user.png';
-  static const String iconsWarning = 'assets/icons/warning.png';
+  static const String iconsInfo = 'assets/icons/info.png';
   static const String iconsSortList = 'assets/icons/sort_list.png';
+  static const String iconsClose = 'assets/icons/close.png';
 }
 
 extension AssetsHelper on String {

@@ -5,6 +5,7 @@ import '../../../constants/filter_subtypes.dart';
 import '../../../extensions/extensions.dart';
 import '../../../providers/screen_service.dart';
 import '../../../themes/app_colors.dart';
+import '../../../utils/assets.dart';
 import '../../../widgets/action_button.dart';
 import '../../../widgets/loading_button.dart';
 
@@ -36,10 +37,7 @@ class DcaModal extends StatelessWidget {
                 onTap: router.pop,
                 radius: 24,
                 backgroundColor: AppColors.dopGray.withOpacity(.3),
-                icon: const Icon(
-                  CupertinoIcons.clear,
-                  size: 12,
-                ),
+                icon: Assets.iconsClose.png,
               ),
             ],
           ).paddingAll(16),

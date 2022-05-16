@@ -2,15 +2,15 @@ import 'dart:math';
 
 import 'package:mobx/mobx.dart';
 
+import '../../constants/bot_sub_types.dart';
 import '../../constants/bot_types.dart';
+import '../../constants/bot_work_type.dart';
 import '../../constants/filter_subtypes.dart';
 import '../../constants/filter_types.dart';
-import '../../constants/graph_periods.dart';
 import '../../constants/sort_types.dart';
 import '../../models/bot_model/bot_model.dart';
 import '../../models/chart_data/chart_data_model.dart';
 import '../../themes/app_colors.dart';
-import '../../widgets/graph_widget.dart';
 
 part 'home_state.g.dart';
 
@@ -33,6 +33,16 @@ abstract class _HomeState with Store {
         botType: BotTypes.values[Random().nextInt(2)],
         money: Random().nextDouble() * 120,
         percent: Random().nextDouble() * 100,
+        workMinutes: Random().nextInt(100),
+        isIncreased: Random().nextBool(),
+        workType:
+            BotWorkTypes.values[Random().nextInt(BotWorkTypes.values.length)],
+        subTypes: index.isEven
+            ? {
+                BotSubTypes.values[Random().nextInt(BotSubTypes.values.length)],
+                BotSubTypes.values[Random().nextInt(BotSubTypes.values.length)],
+              }
+            : {},
       );
     }).asObservable();
     sortByBotProfit();

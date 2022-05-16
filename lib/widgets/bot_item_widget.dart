@@ -3,7 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../extensions/extensions.dart';
 import '../../utils/assets.dart';
+import '../constants/bot_sub_types.dart';
 import '../constants/bot_types.dart';
+import '../constants/bot_work_type.dart';
 import '../models/bot_model/bot_model.dart';
 import '../providers/screen_service.dart';
 import '../themes/app_colors.dart';
@@ -80,20 +82,48 @@ class BotItemWidget extends HookWidget {
                                 ),
                                 const SizedBox(width: 8),
                                 Assets.iconsBinance.png,
+                                const SizedBox(width: 4),
+                                if (bot.isIncreased)
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.iconBackgroundColor,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: Text(
+                                      'x125',
+                                      style: context.theme.bodyText2.copyWith(
+                                        color: AppColors.yellow,
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
                             const SizedBox(height: 4),
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Assets.iconsStopLoss.png,
-                                const SizedBox(width: 4),
-                                Assets.iconsTakeProfit.png,
-                                const SizedBox(width: 4),
+                                for (final subType in bot.subTypes)
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      subType.icon,
+                                      const SizedBox(width: 4),
+                                    ],
+                                  ),
                                 Text(
-                                  '1h 15min',
+                                  intToTimeLeft(bot.workMinutes),
                                   style: context.theme.bodyText2.copyWith(
                                     color: AppColors.dopGray,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  bot.workType.title,
+                                  style: context.theme.bodyText2.copyWith(
+                                    color: bot.workType.color,
                                   ),
                                 ),
                               ],
@@ -170,5 +200,12 @@ class BotItemWidget extends HookWidget {
         ],
       ),
     );
+  }
+
+  String intToTimeLeft(int value) {
+    int h, m;
+    h = value ~/ 60;
+    m = value - h * 60;
+    return '${h > 0 ? '${h}h' : ''} ${m}min';
   }
 }

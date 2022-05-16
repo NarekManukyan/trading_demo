@@ -40,6 +40,7 @@ class CircularChartWidget extends HookWidget {
                 ),
                 child: const Text('Funds value'),
               ),
+              const SizedBox(width: 2),
               ElevatedButton(
                 onPressed: () {},
                 style: context.theme.smallButtonSecondStyle.copyWith(
@@ -52,6 +53,7 @@ class CircularChartWidget extends HookWidget {
                 ),
                 child: const Text('Profit'),
               ),
+              const SizedBox(width: 2),
               ElevatedButton(
                 onPressed: () {},
                 style: context.theme.smallButtonSecondStyle.copyWith(
@@ -105,7 +107,7 @@ class CircularChartWidget extends HookWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'BTC',
+                            'USDT',
                             style: context.theme.bodyText2.dopGray,
                           ),
                         ],
@@ -137,7 +139,13 @@ class CircularChartWidget extends HookWidget {
                               const SizedBox(width: 8),
                               Text(
                                 '${item.x} - ${item.y.toInt()} %',
-                                style: context.theme.bodyText2,
+                                style: context.theme.bodyText2.copyWith(
+                                  fontSize: 14,
+                                  fontFeatures: [],
+                                  color: _data.first == item
+                                      ? AppColors.white
+                                      : AppColors.dopGray,
+                                ),
                               ),
                             ],
                           ),

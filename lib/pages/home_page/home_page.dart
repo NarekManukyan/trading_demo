@@ -307,7 +307,7 @@ class HomePage extends HookWidget {
                     child: Assets.iconsSort.png,
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     _homeState.isBotProfitSelected =
                         !_homeState.isBotProfitSelected;
@@ -349,7 +349,7 @@ class HomePage extends HookWidget {
         ),
         SliverPadding(
           padding: EdgeInsets.only(
-            bottom: context.bottomPadding + 64,
+            bottom: context.bottomPadding + 96,
           ),
           sliver: Observer(
             builder: (_) {

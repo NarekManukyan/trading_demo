@@ -49,6 +49,7 @@ class BarChartWidget extends HookWidget {
                       ),
                       child: const Text('USD'),
                     ),
+                    const SizedBox(width: 2),
                     ElevatedButton(
                       onPressed: () {},
                       style: context.theme.smallButtonSecondStyle.copyWith(
